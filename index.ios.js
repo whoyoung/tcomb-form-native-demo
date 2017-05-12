@@ -38,9 +38,10 @@ export default class TcombFormNativeDemo extends Component {
   componentWillMount() {
     console.log('componentWillMount');
   }
-  onChange(value) {
+  onChange(value,path) {
     console.log('=========');
     console.log(value);
+    console.log(path);
     this.setState({value});
   }
   onPress() {
@@ -54,7 +55,7 @@ export default class TcombFormNativeDemo extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <RealForm ref='form' type={Person} options={options} value={this.state.value} onChange={(value)=>this.onChange(value)}/>
+        <RealForm ref='form' type={Person} options={options} value={this.state.value} onChange={(value,path)=>this.onChange(value,path)}/>
         <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
