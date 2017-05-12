@@ -9,23 +9,38 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableHighlight
 } from 'react-native';
+import tForm from 'tcomb-form-native';
+let RealForm = tForm.form.Form;
+
+let Person = tForm.struct({
+  name: tForm.String,
+  surname: tForm.maybe(tForm.String),
+  age: tForm.Number,
+  rememberMe: tForm.Boolean
+});
+
+let options = {};
+
 
 export default class TcombFormNativeDemo extends Component {
+  onPress() {
+    let value = this.refs.form.getValue();
+    if(value) {
+      console.log('------------');
+      console.log(value);
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <RealForm ref='form' type={Person} options = {options} />
+        <TouchableHighlight style={styles.button} onPress={()=>this.onPress()} underlayColor='#99d9f4'>
+          <Text style={styles.buttonText}>Save</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -34,19 +49,26 @@ export default class TcombFormNativeDemo extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    top:64,
+    marginHorizontal:15,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  button: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
   },
 });
 
