@@ -15,8 +15,8 @@ import {
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
 let i18n = {
-  optional : ' (选填)',
-  required : ' (必填)'
+  optional: ' (选填)',
+  required: ' (必填)'
 }
 // let Person = tForm.struct({
 //   name: tForm.String,
@@ -44,16 +44,30 @@ export default class TcombFormNativeDemo extends Component {
   constructor(props) {
     super();
     this.state = {
-      value : {},
-      type : this.getFormType(),
-      options : {}
+      value: {},
+      type: this.getFormType(),
+      options: {
+        fileds: {
+          birthday: {
+            config: {
+              animationConfig: {
+                duration: 10000
+              }
+            },
+
+          },
+          name: {
+            label: '姓名'
+          }
+        }
+      }
     };
   }
   getFormType(name) {
     if (name == 'formalName') {
       return tForm.struct({
         name: Name,
-        age: tForm.maybe(tForm.Number) 
+        age: tForm.maybe(tForm.Number)
       });
     } else if (name == 'nickname') {
       return tForm.struct({
@@ -88,7 +102,7 @@ export default class TcombFormNativeDemo extends Component {
   onChange(value, path) {
     if (path.indexOf('name') >= 0 && value.name !== this.state.value.name) {
       let formType = this.getFormType(value.name);
-      this.setState({ value, type:formType });
+      this.setState({ value, type: formType });
     } else {
       this.setState({ value });
     }
