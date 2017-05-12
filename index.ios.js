@@ -22,13 +22,16 @@ let Person = tForm.struct({
   rememberMe: tForm.Boolean
 });
 
-let options = {};
-
 
 export default class TcombFormNativeDemo extends Component {
   constructor(props) {
     super();
     this.state = {
+      options: {
+        fields: {
+          name: {}
+        }
+      },
       value: {
         name: 'hu',
         surname: 'yang'
@@ -36,13 +39,21 @@ export default class TcombFormNativeDemo extends Component {
     };
   }
   componentWillMount() {
-    console.log('componentWillMount');
   }
-  onChange(value,path) {
+  onChange(value, path) {
     console.log('=========');
-    console.log(value);
     console.log(path);
-    this.setState({value});
+    if (path.indexOf('rememberMe') >= 0) {
+      let options = tForm.update(this.state.options, {
+        fields: {
+          name: {
+            editable: { '$set': !value.rememberMe }
+          }
+        }
+      })
+      this.setState({ options: options });
+    }
+    this.setState({ value: value });
   }
   onPress() {
     let value = this.refs.form.getValue();
@@ -53,9 +64,10 @@ export default class TcombFormNativeDemo extends Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <View style={styles.container}>
-        <RealForm ref='form' type={Person} options={options} value={this.state.value} onChange={(value,path)=>this.onChange(value,path)}/>
+        <RealForm ref='form' type={Person} options={this.state.options} value={this.state.value} onChange={(value, path) => this.onChange(value, path)} />
         <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
