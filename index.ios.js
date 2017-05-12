@@ -22,21 +22,21 @@ let Person = tForm.struct({
   rememberMe: tForm.Boolean
 });
 
-
+const defaultState = {
+  options: {
+    fields: {
+      name: {}
+    }
+  },
+  value: {
+    name: 'hu',
+    surname: 'yang'
+  }
+}
 export default class TcombFormNativeDemo extends Component {
   constructor(props) {
     super();
-    this.state = {
-      options: {
-        fields: {
-          name: {}
-        }
-      },
-      value: {
-        name: 'hu',
-        surname: 'yang'
-      }
-    };
+    this.state = { ...defaultState };
   }
   componentWillMount() {
   }
@@ -60,9 +60,12 @@ export default class TcombFormNativeDemo extends Component {
     let value = this.refs.form.getValue();
     if (value) {
       console.log(value);
+      this.clearForm();
     }
   }
-
+  clearForm() {
+    this.setState({ ...defaultState });
+  }
   render() {
     console.log(this.state);
     return (
