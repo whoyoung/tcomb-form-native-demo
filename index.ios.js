@@ -40,9 +40,10 @@ export default class TcombFormNativeDemo extends Component {
   }
   componentWillMount() {
   }
+  componentDidMount() {
+    this.refs.form.getComponent('age').refs.input.focus();
+  }
   onChange(value, path) {
-    console.log('=========');
-    console.log(path);
     if (path.indexOf('rememberMe') >= 0) {
       let options = tForm.update(this.state.options, {
         fields: {
@@ -58,7 +59,6 @@ export default class TcombFormNativeDemo extends Component {
   onPress() {
     let value = this.refs.form.getValue();
     if (value) {
-      console.log('------------');
       console.log(value);
     }
   }
