@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 import tForm from 'tcomb-form-native';
 let RealForm = tForm.form.Form;
-
+let i18n = {
+  optional : ' (选填)',
+  required : ' (必填)'
+}
 // let Person = tForm.struct({
 //   name: tForm.String,
 //   surname: tForm.maybe(tForm.String),
@@ -50,7 +53,7 @@ export default class TcombFormNativeDemo extends Component {
     if (name == 'formalName') {
       return tForm.struct({
         name: Name,
-        age: tForm.Number
+        age: tForm.maybe(tForm.Number) 
       });
     } else if (name == 'nickname') {
       return tForm.struct({
@@ -104,7 +107,7 @@ export default class TcombFormNativeDemo extends Component {
     console.log(this.state);
     return (
       <View style={styles.container}>
-        <RealForm ref='form' type={this.state.type} options={this.state.options} value={this.state.value} onChange={(value, path) => this.onChange(value, path)} />
+        <RealForm ref='form' type={this.state.type} i18n={i18n} options={this.state.options} value={this.state.value} onChange={(value, path) => this.onChange(value, path)} />
         <TouchableHighlight style={styles.button} onPress={() => this.onPress()} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
         </TouchableHighlight>
